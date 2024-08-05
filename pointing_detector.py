@@ -38,7 +38,7 @@ class PointingDetector:
             frame_id="camera_color_optical_frame",
             color_topic="/camera/color/image_raw",
             depth_topic="/camera/aligned_depth_to_color/image_raw",
-            arm_angle_thresh=140.0,
+            arm_angle_thresh=120.0,
             arrow_length=2.0,
             model_complexity=1,
             min_detection_confidence=0.9,
