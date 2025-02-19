@@ -46,6 +46,8 @@ class PointingDetector:
                 ):
 
         self.camera_info = np.asarray(rospy.get_param('/pose_estimator/intrinsics'))
+        self.depth_encoding = rospy.get_param('/pose_estimator/depth_encoding')
+        self.depth_scale = rospy.get_param('/pose_estimator/depth_scale')        
         self.frame_id = frame_id
         self.color_topic = color_topic
         self.depth_topic = depth_topic
@@ -169,8 +171,9 @@ class PointingDetector:
         depth = req.depth
 
         try:
-            # Convert ROS Image message to OpenCV image with 16UC1 encoding
-            depth_img = self.bridge.imgmsg_to_cv2(depth, "16UC1")
+            depth.encoding = self.depth_encoding
+            depth_img = CvBridge().imgmsg_to_cv2(depth, self.depth_encoding)
+            depth_img = depth_img/int(self.depth_scale)
         except CvBridgeError as e:
             rospy.logerr(f"Depth Image CvBridge Error: {e}")
 

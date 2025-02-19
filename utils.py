@@ -20,7 +20,7 @@ def get_depth_coordinates(x, y, depth_image, filtering=True, filter_width=3):
     # Filtering the depth values in the neighborhood
 
     # Unfiltered z-coordinate (depth) in meters
-    z = depth_image[y, x] / 1000
+    z = depth_image[y, x]
     
     if filtering:
         half = filter_width // 2
@@ -36,7 +36,7 @@ def get_depth_coordinates(x, y, depth_image, filtering=True, filter_width=3):
         # Return the filtered depth value of the pixel neighborhood
         if filtering:
             z_list = depth_image[y - half : y + half, x - half : x + half]
-            z = np.median(z_list) / 1000
+            z = np.median(z_list)
 
     if z <= 0:
         rospy.logwarn("Warning! Depth is zero!")
